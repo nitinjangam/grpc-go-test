@@ -1,0 +1,41 @@
+// // Package common contains the common utility functions required for Order-Services
+// // This file provides a health status server for gRPC. The health server implements the official
+// // gRPC health checking protocol and can be used as a Kubernetes liveness probe.
+// package main
+
+// import (
+// 	"google.golang.org/grpc"
+// 	"google.golang.org/grpc/health"
+// 	"google.golang.org/grpc/health/grpc_health_v1"
+// )
+
+// // GrpcHealthServer struct holds information about the health server.
+// type GrpcHealthServer struct {
+// 	healthServer *health.Server
+// }
+
+// // RegisterHealthServer allows the user to register a new health server with an existing gRPC server.
+// // The health server will be registered for the default service (empty string) and will have a status
+// // of "SERVING".
+// // The function needs a grpc.ServiceRegistrar as a parameter (e.g. a gRPC server instance).
+// // This function returns a GrpcHealthServer struct, which can be stored to be able to change the service
+// // status in the future.
+// func RegisterHealthServer(s grpc.ServiceRegistrar) GrpcHealthServer {
+// 	healthServer := health.NewServer()
+// 	healthServer.SetServingStatus("", grpc_health_v1.HealthCheckResponse_SERVING)
+// 	grpc_health_v1.RegisterHealthServer(s, healthServer)
+
+// 	return GrpcHealthServer{healthServer: healthServer}
+// }
+
+// // SetServingStatus updates the serving status for the default service to "SERVING".
+// // This method can be called on an instance of GrpcHealthServer.
+// func (hs GrpcHealthServer) SetServingStatus() {
+// 	hs.healthServer.SetServingStatus("", grpc_health_v1.HealthCheckResponse_SERVING)
+// }
+
+// // SetNotServingStatus updates the serving status for the default service to "NOT SERVING".
+// // This method can be called on an instance of GrpcHealthServer.
+// func (hs GrpcHealthServer) SetNotServingStatus() {
+// 	hs.healthServer.SetServingStatus("", grpc_health_v1.HealthCheckResponse_NOT_SERVING)
+// }

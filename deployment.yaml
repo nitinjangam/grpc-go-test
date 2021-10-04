@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-grpc-app
+spec:
+  selector:
+    matchLabels:
+      app: simple-grpc-app
+  template:
+    metadata:
+      labels:
+        app: simple-grpc-app
+    spec:
+      containers:
+      - name: simple-grpc-app
+        image: nitincg/simple-grpc:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 50055
+        livenessProbe:
+          exec:
+            command: ["/bin/grpc-health-probe", "-addr=:50055", "-connect-timeout=100ms", "-rpc-timeout=150ms"]
+          initialDelaySeconds: 5
+          periodSeconds: 60

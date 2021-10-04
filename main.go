@@ -53,6 +53,7 @@ func main() {
 	s := grpc.NewServer()
 	greetpb.RegisterGreetServiceServer(s, &server{})
 	healthpb.RegisterHealthServer(s, &server{})
+	// RegisterHealthServer(s)
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
